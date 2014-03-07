@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="ie ie6" lang="zh-cn"><![endif]-->
+<!--[if IE 7]><html class="ie ie7" lang="zh-cn"><![endif]-->
+<!--[if IE 8]><html class="ie ie8" lang="zh-cn"><![endif]-->
+<!--[if IE 9]><html class="ie ie9" lang="zh-cn"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="zh-cn"><!--<![endif]-->
+	<head>
+		<meta charset="utf-8" />
+		<title> 标题</title>
+		<meta name="Copyright" content="Tencent" />
+		<meta name="Description" content="页面描述" />
+		<meta name="Keywords" content="页面关键字" />
+		<link rel="stylesheet" type="text/css" href="http://static.gtimg.com/icson/css/common/gb.css" media="screen" />
+		<style>
+		.logo{width: 255px; height: 93px; overflow: hidden; margin: 50px; display: inline-block; *display: inline; *zoom: 1; vertical-align: middle;}
+		.logo1{background-image: url(sprites.png);}
+		.logo2{background-image: url(sprites2.png);}
+		#js_logo_extra{display: none;}
+		</style>
+		
+	</head>
+	<body>
+		<div id="js_logo_extra" class="logo logo1"><img id="js_logo_extra_img" src="sprites.png" alt=""></div>
+	</body>
+	<script type="text/javascript" src="http://st.icson.com/static_v1/js/jquery-1.5.1.min.js?v=2013080801" charset="gb2312"></script>
+		<script type="text/javascript">
+
+		// logo animation
+        (function(){
+            var $logo = $('#js_logo_extra_img'),
+                $wrap = $('#js_logo_extra'),
+                index = 0,
+                isRunning = false,
+                TOTAL = 217,    //总共帧数
+                SPEED = 30;     //帧速度
+            $wrap.hide();
+            
+            var onImgLoaded = function(){
+                if(isRunning){
+                    return;
+                }
+                $wrap.show();
+                isRunning = true;
+                var timer1 = setInterval(function(){
+                    index++;
+                    if(index >= TOTAL){
+                        clearInterval(timer1);
+                        fireWord();
+                        // $wrap.fadeOut();
+                    }
+                    $logo.css('margin-top','-' + (index*93) + 'px');
+                },SPEED);
+            };
+            
+            setTimeout(function(){
+                var img = new Image();
+                img.src = "sprites.png";
+                img.onload = function(){
+                    onImgLoaded();
+                };
+                img.onerror = img.onabort = function() {
+                     $wrap.hide();
+                };
+                //ie cache fix
+                if(img.complete){
+                    onImgLoaded();
+                }
+            },300)    
+
+            var fireWord = function(){
+                var LOOP = 0,         //烟花循环次数
+                    f_index = 197;
+
+                var timer2 = setInterval(function(){
+                    f_index++;
+                    if(f_index >= TOTAL){
+                        LOOP++;
+                        if(LOOP>=1){
+                            clearInterval(timer2);
+                            $wrap.fadeOut();
+                        }else{
+                            f_index = 197;
+                        }
+                    }
+                    $logo.css('margin-top','-' + (f_index*93) + 'px');
+                },40);    
+            }
+        })();
+
+		</script>
+</html>
